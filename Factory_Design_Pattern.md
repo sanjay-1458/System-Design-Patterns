@@ -4,4 +4,89 @@ Factory design pattern offers an abstraction layer for object creation, this hel
 
 <img src="https://github.com/user-attachments/assets/4f1e6db8-fcab-4de8-b8ef-3b4c83f1d602" width="500" height="300" />
 
+## Implementation
 
+### Normal client interaction
+
+Here client directly creates the object using `new` keyword and client is dependent on concrete class.
+
+```
+#include<iostream>
+#include<string>
+
+class Animal{
+  public:
+  virtual void speak()=0;
+  virtual ~Animal(){}
+};
+class Dog:public Animal{
+    public:
+    void speak() override{
+        std::cout<<"Dog Speak"<<std::endl;
+    }
+};
+class Cat:public Animal{
+    public:
+    void speak() override{
+        std::cout<<"Cat Speak"<<std::endl;
+    }
+};
+
+int main(){
+    Animal *base_ptr=new Dog();
+    base_ptr->speak();
+    delete base_ptr;
+    return 0;
+}
+
+```
+
+### Using fcatory class
+
+Client have to interct with factory and factory is reponsible for reating objects and returning it to client.
+
+```
+#include<iostream>
+#include<string>
+
+class Animal{
+  public:
+  virtual void speak()=0;
+  virtual ~Animal(){}
+};
+class Dog:public Animal{
+    public:
+    void speak() override{
+        std::cout<<"Dog Speak"<<std::endl;
+    }
+};
+class Cat:public Animal{
+    public:
+    void speak() override{
+        std::cout<<"Cat Speak"<<std::endl;
+    }
+};
+
+class AnimalFactory{
+    public:
+    static::Animal* createAnimal(std::string str){
+        if(str=="Dog"){
+            return new Dog();
+        }
+        else if(str=="Cat"){
+            return new Cat();
+        }
+        else{
+            return nullptr;
+        }
+    }
+};
+
+int main(){;
+    Animal* client=AnimalFactory::createAnimal("Dog");
+    client->speak();
+    delete client;
+    return 0;
+}
+
+```
