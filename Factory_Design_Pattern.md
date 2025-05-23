@@ -41,7 +41,7 @@ int main(){
 
 ```
 
-### Using fcatory class
+### Using factory class
 
 Client have to interct with factory and factory is reponsible for reating objects and returning it to client.
 
@@ -90,3 +90,70 @@ int main(){;
 }
 
 ```
+
+### Implementing with Open/Closed Principle
+
+By creating derived class of factory we can use open/clodes principle.
+
+```
+#include<iostream>
+#include<string>
+
+class Animal{
+  public:
+  virtual void speak()=0;
+  virtual ~Animal(){}
+};
+class Dog:public Animal{
+    public:
+    void speak() override{
+        std::cout<<"Dog Speak"<<std::endl;
+    }
+};
+class Cat:public Animal{
+    public:
+    void speak() override{
+        std::cout<<"Cat Speak"<<std::endl;
+    }
+};
+
+class AnimalFactory{
+    public:
+    virtual Animal* createAnimal()=0;
+    virtual ~AnimalFactory(){}
+};
+class DogFactory: public AnimalFactory{
+    public:
+    Animal* createAnimal() override{
+        return new Dog();
+    }
+};
+class CatFactory: public AnimalFactory{
+    public:
+    Animal* createAnimal() override{
+        return new Cat();
+    }
+};
+
+int main(){;
+    AnimalFactory* factory=nullptr;
+    std::string str="Dog";
+    if(str=="Dog"){
+        factory=new DogFactory();
+    }
+    else if(str=="Cat"){
+        factory=new CatFactory();
+    }
+    else{
+        return 0;
+    }
+    Animal* animal=factory->createAnimal();
+    animal->speak();
+    delete factory;
+    delete animal;
+    return 0;
+}
+
+```
+
+### 
