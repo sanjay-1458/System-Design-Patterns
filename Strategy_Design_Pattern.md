@@ -1,5 +1,6 @@
 In strategy design pattern we aim to add flexibility on the algorithm or strategy we are using at run time. Here client can chnage the startegy about how we are approaching a problem thus chnaging the way how class behave.
-Client interact with the COntext interface which is resopnsible for creating and calling the particular concrete strategy, it follows the open/closed principle making it sclable.
+Client interact with the Context interface which is resopnsible for creating and calling the particular concrete strategy, it follows the open/closed principle making it scalable.
+Client tells what strategy to perform and the resposibility of the Context is to implement it.
 
 
 ```cpp []
