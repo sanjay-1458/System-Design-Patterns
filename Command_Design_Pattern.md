@@ -51,3 +51,112 @@ int main(){
     return 0;
 }
 ```
+
+# Example
+```cpp []
+#include <bits/stdc++.h>
+
+using namespace std;
+
+class Command {
+    
+public:
+    
+    virtual void execute() = 0;
+    virtual ~Command() = default;
+};
+
+class Fan {
+    
+public:
+    
+    void fanStart() {
+        
+        cout<<"Fan started"<<endl;
+    }
+};
+
+class Light {
+      
+public:
+    
+    void lightOn() {
+        
+        cout<<"Light turned on"<<endl;
+    }
+};
+
+class FanOnCommand : public Command {
+    
+    Fan* fan;
+    
+public:
+    
+    FanOnCommand(Fan* fan) {
+        
+        this -> fan = fan;
+    }
+    
+    void execute() override{
+        
+        fan -> fanStart();
+    }
+};
+
+class LightOnCommand : public Command {
+      
+    Light* light;
+    
+public:
+    
+    LightOnCommand(Light* light) {
+        
+        this -> light = light;
+    }
+    
+    void execute() override{
+        
+        light -> lightOn();
+    }
+};
+
+
+class Remote {
+    
+    Command* command;
+    
+public:
+
+    Remote(Command* command) {
+        
+        this -> command = command;
+    }
+    
+    void setCommand(Command* command) {
+        
+        this -> command = command;
+    }
+    
+    void execute() {
+        
+        command -> execute();
+    }
+};
+
+int main() {
+    
+    Light light;
+    Fan fan;
+    
+    LightOnCommand lightCommand(&light);
+    FanOnCommand fanCommand(&fan);
+    
+    Remote remote(&lightCommand);
+    remote.execute();
+    
+    remote.setCommand(&fanCommand);
+    remote.execute();
+
+    return 0;
+}
+```
