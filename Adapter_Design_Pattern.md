@@ -3,6 +3,70 @@
 Adpater design pattern is used to convert an already existing interface to that of what client expects.
 Here client expects Target interface but we have Adaptee interface, so Adapter converts Apdatee to that of Target interface.
 
+## Genral Code
+```cpp []
+#include <iostream>
+
+using std::cin;
+using std::cout;
+using std::endl;
+
+// Current: 
+// Client expectes Target::request()
+// But we have Adaptee::specificRequest()
+// Adapter wraps the Adaptee to provide compatible interface
+
+
+// Expected Interface
+
+class Target {
+    
+public:
+
+    virtual void request() = 0;
+    virtual ~Target() {}
+};
+
+// Existing incompatible class
+
+class Adaptee {
+    
+public:
+    
+    void specificRequest() {
+        
+        cout<<"Adaptee::specificRequest()"<<endl;
+    }
+};
+
+class Adapter : public Target {
+    
+    Adaptee* adaptee;
+    
+public:
+
+    Adapter(Adaptee* a) : adaptee(a) {}
+    
+    void request() override {
+        
+        adaptee -> specificRequest();
+    }
+};
+
+int main() {
+    
+    Adaptee adaptee;
+    
+    Target* target = new Adapter(&adaptee);
+    
+    target -> request();
+
+    delete target;
+    
+    return 0;
+}
+```
+
 ## Code
 ```cpp []
 #include<iostream>
