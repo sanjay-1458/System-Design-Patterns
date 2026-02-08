@@ -2,6 +2,87 @@
 
 Encapsulating a request to an object. Client knows about the reciever, which command to execute and invoker. The invoker can accept a command and run a command, the command execute the request given by the client and the reciver perform action based on it.
 
+<img width="286" height="582" alt="image" src="https://github.com/user-attachments/assets/3b011494-5e36-497b-b71d-5b7dd0349df3" />
+
+## Genral Pattern
+```cpp []
+#include <iostream>
+
+using std::cin;
+using std::cout;
+using std::endl;
+
+class Receiver {
+    
+public:
+
+    void action() {
+        
+        cout<<"Action is performed"<<endl;
+    }
+};
+
+class Command {
+    
+public:
+    
+    virtual void execute() = 0;
+    virtual ~Command() {}
+};
+
+class ConcreteCommand : public Command {
+    
+    Receiver* receiver;
+    
+public:
+
+    ConcreteCommand(Receiver* r) : receiver(r) {}
+    
+    void execute() override{
+        
+        receiver -> action();
+    }
+};
+
+
+class Invoker {
+
+    Command* command;
+    
+public:
+    
+    Invoker(Command* c) : command(c) {}
+    
+    void setCommand(Command* c) { 
+        
+        command = c;
+    }
+    
+    void execute() {
+        
+        if(command) {
+            
+            command -> execute();
+        }
+    }
+    
+};
+
+
+int main() {
+    
+    Receiver receiver;
+    
+    ConcreteCommand command(&receiver);
+    
+    Invoker remote(&command);
+    
+    remote.execute();
+    
+    return 0;
+}
+```
+
 ## Code
 ```cpp []
 #include<iostream>
